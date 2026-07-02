@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dream Trip Planner</title>
+</head>
+
+<body>
+
+<h1>Dream Trip Planner</h1>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Destination</th>
+<th>Country</th>
+<th>Budget</th>
+<th>Priority</th>
+<th>Status</th>
+</tr>
+
+{% for trip in destinations %}
+
+<tr>
+
+<td>{{ trip[0] }}</td>
+<td>{{ trip[1] }}</td>
+<td>{{ trip[2] }}</td>
+<td>{{ trip[3] }}</td>
+<td>{{ trip[4] }}</td>
+<td>{{ trip[5] }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+
+</html>

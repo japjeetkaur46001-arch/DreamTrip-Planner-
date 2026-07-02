@@ -1,25 +1,24 @@
-from flask import Flask
+from flask import Flask, render_template
 from database import get_connection
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    try:
-        conn = get_connection()
-        cur = conn.cursor()
 
-        cur.execute("SELECT * FROM destinations;")
-        destinations = cur.fetchall()
+    conn = get_connection()
+    cur = conn.cursor()
 
-        cur.close()
-        conn.close()
+    cur.execute("SELECT * FROM destinations")
+    destinations = cur.fetchall()
 
-        return f"<h2>Connected Successfully!</h2><pre>{destinations}</pre>"
+    cur.close()
+    conn.close()
 
-    except Exception as e:
-        return f"Database Error:<br>{e}"
+    return render_template(
+        "index.html",
+        destinations=destinations
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
