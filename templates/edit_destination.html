@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Destination</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+          
+</head>
+
+<body>
+
+<h1>Edit Destination</h1>
+
+<form method="POST">
+
+    <label>Destination</label><br>
+    <input type="text" name="destination" value="{{ destination[1] }}"><br><br>
+
+    <label>Country</label><br>
+    <input type="text" name="country" value="{{ destination[2] }}"><br><br>
+
+    <label>Budget</label><br>
+    <input type="number" name="budget" value="{{ destination[3] }}"><br><br>
+
+    <label>Priority</label><br>
+
+    <select name="priority">
+
+        <option {% if destination[4]=='High' %}selected{% endif %}>High</option>
+
+        <option {% if destination[4]=='Medium' %}selected{% endif %}>Medium</option>
+
+        <option {% if destination[4]=='Low' %}selected{% endif %}>Low</option>
+
+    </select>
+
+    <br><br>
+
+    <label>Status</label><br>
+
+    <select name="status">
+
+        <option {% if destination[5]=='Wishlist' %}selected{% endif %}>Wishlist</option>
+
+        <option {% if destination[5]=='Planned' %}selected{% endif %}>Planned</option>
+
+        <option {% if destination[5]=='Visited' %}selected{% endif %}>Visited</option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+
+        Update Destination
+
+    </button>
+
+</form>
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+</html>

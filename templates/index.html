@@ -3,11 +3,127 @@
 
 <head>
     <title>Dream Trip Planner</title>
-</head>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>  
 
 <body>
 
-<h1>Dream Trip Planner</h1>
+<div class="layout">
+
+    <div class="sidebar">
+
+        <h2>✈️ Dream Trip Planner</h2>
+
+        <a href="/">🏠 Home</a>
+        <a href="#">💜 Wishlist</a>
+        <a href="#">📅 Planned</a>
+        <a href="#">✅ Visited</a>
+
+    </div>
+
+    <div class="container">
+
+    <div class="hero">
+
+    <h1>🌍 Dream Trip Planner</h1>
+
+    <p>
+        Plan • Organize • Track your dream destinations
+    </p>
+
+    </div>
+
+    <div class="dashboard">
+
+    <div class="card">
+        <h3>Total Destinations</h3>
+        <h2>{{ stats.total }}</h2>
+    </div>
+
+    <div class="card">
+        <h2>{{ stats.visited }}</h2>
+        <p>Visited Trips</p>
+    </div>
+
+    <div class="card">
+        <h2>{{ stats.high_priority }}</h2>
+        <p>High Priority</p>
+    </div>
+
+    <div class="card">
+        <h2>₹{{ stats.total_budget }}</h2>
+        <p>Total Budget</p>
+    </div>
+
+</div>
+<br>
+
+<a href="/add" class="add-btn">
+    ➕ Add New Destination
+</a>
+
+<br><br>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search destination..."
+        value="{{ search }}">
+
+    <select name="status">
+
+        <option value="">All Status</option>
+
+        <option value="Planned"
+            {% if status=="Planned" %}selected{% endif %}>
+            Planned
+        </option>
+
+        <option value="Visited"
+            {% if status=="Visited" %}selected{% endif %}>
+            Visited
+        </option>
+
+        <option value="Wishlist"
+            {% if status=="Wishlist" %}selected{% endif %}>
+            Wishlist
+        </option>
+
+    </select>
+
+    <select name="sort_by">
+
+    <option value="">Sort By</option>
+
+    <option value="budget_low"
+        {% if sort_by=="budget_low" %}selected{% endif %}>
+        Budget: Low → High
+    </option>
+
+    <option value="budget_high"
+        {% if sort_by=="budget_high" %}selected{% endif %}>
+        Budget: High → Low
+    </option>
+
+    <option value="destination"
+        {% if sort_by=="destination" %}selected{% endif %}>
+        Destination: A → Z
+    </option>
+
+    </select>
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
 
 <table border="1">
 
@@ -18,6 +134,7 @@
 <th>Budget</th>
 <th>Priority</th>
 <th>Status</th>
+<th>Actions</th>
 </tr>
 
 {% for trip in destinations %}
@@ -28,14 +145,34 @@
 <td>{{ trip[1] }}</td>
 <td>{{ trip[2] }}</td>
 <td>{{ trip[3] }}</td>
-<td>{{ trip[4] }}</td>
-<td>{{ trip[5] }}</td>
+<td>
+    <span class="priority {{ trip[4]|lower }}">
+        {{ trip[4] }}
+    </span>
+</td>
+<td>
+    <span class="status {{ trip[5]|lower }}">
+        {{ trip[5] }}
+    </span>
+</td>
+
+<td>
+    <a href="/edit/{{ trip[0] }}">Edit</a> |
+    <a href="/delete/{{ trip[0] }}"
+onclick="return confirm('Are you sure you want to delete this destination?')">
+Delete
+</a>
+</td>
 
 </tr>
 
 {% endfor %}
 
 </table>
+
+</div>
+
+</div>
 
 </body>
 
